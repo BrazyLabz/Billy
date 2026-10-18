@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Billy keeps your next bill at the top.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Billy">
+<meta name="theme-color" content="#000000">
+<meta name="format-detection" content="telephone=no">
+<title>Billy</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="styles.css">
+<script>
+  /* paint the saved background before anything loads, so there's no white flash */
+  try{var s=JSON.parse(localStorage.getItem('billy.v1')||'{}').settings||{};if(s.bg){document.documentElement.style.setProperty('--bg',s.bg);document.documentElement.style.background=s.bg;}if(s.accent)document.documentElement.style.setProperty('--accent',s.accent);}catch(e){}
+</script>
+</head>
+<body>
+<div id="splash"><img src="icons/icon-512.png" alt="Billy"></div>
+
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <span class="nav-title" id="navTitle">Bills</span>
+    <button class="nav-btn" id="privBtn" data-act="privacy" aria-label="Hide or show amounts" title="Privacy mode"></button>
+  </div>
+</header>
+
+<div id="stage">
+  <main id="app"><div id="view"></div></main>
+</div>
+
+<nav class="tabs" aria-label="Tabs">
+  <div class="inner">
+    <button class="tab" data-act="tab" data-id="bills"><svg viewBox="0 0 24 24"><path d="M5 3.5h14v17l-2.5-1.6-2.3 1.6-2.2-1.6-2.2 1.6-2.3-1.6L5 20.5z"/><path d="M8.5 8.5h7M8.5 12.5h4.5"/></svg>Bills</button>
+    <button class="tab" data-act="tab" data-id="calendar"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Calendar</button>
+    <button class="fab" data-act="new" aria-label="Add bill"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button class="tab" data-act="tab" data-id="insights"><svg viewBox="0 0 24 24"><path d="M5 20V12M10 20V5M15 20v-9M20 20v-5"/></svg>Insights</button>
+    <button class="tab" data-act="tab" data-id="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="sheet-head" id="sheetHead">
+    <div class="grab"></div>
+    <div class="sh-bar">
+      <button class="sh-btn" data-act="close">Cancel</button>
+      <h3 id="sheetTitle">New Bill</h3>
+      <button class="sh-btn strong" data-act="save" id="sheetSave">Add</button>
+    </div>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
+
+<div class="alert-wrap" id="alertWrap"><div class="alert" id="alert" role="alertdialog"></div></div>
+<div id="island" role="status" aria-live="polite"></div>
+<input type="file" id="fileIn" accept=".json,application/json" class="hidden">
+<label id="hap" class="hidden" aria-hidden="true"><input type="checkbox" switch></label>
+
+<script src="app.js"></script>
+</body>
+</html>
